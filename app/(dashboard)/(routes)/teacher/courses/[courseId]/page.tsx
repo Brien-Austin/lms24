@@ -1,7 +1,70 @@
-export default function Course({params} : {params: {courseId : string}}){
+import { IconBadge } from "@/components/IconBadge";
+import { db } from "@/lib/db"
+import { auth } from "@clerk/nextjs"
+import { LayoutDashboard } from "lucide-react";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import TitleForm from "./_components/TitleForm";
+
+export default async function Course({params} : {params: {courseId : string}}){
+
+    
+
+    const course = await db.course.findUnique({
+        where : {
+            id : params.courseId
+        }
+    })
+
+    if (!course){
+        return redirect("/")
+    }
+
+    
+
+  
+    const requiredFields = [
+        course?.title,
+        course?.description,
+        course?.imageUrl,
+        course?.price,
+        course?.categoryID
+    ]
+
+    const totalFields = requiredFields.length;
+    const completedFields = requiredFields.filter(Boolean).length;
+    const completionText = `(${completedFields}/${totalFields})`
+    const id = auth();
+    console.log(id);
     return (
-        <>
-        <p>Course ID : {params.courseId}</p>
-        </>
+        <div className="p-6">
+            <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-y-2">
+                    <h1 className="text-2xl font-medium">
+                        Course Setup
+                    </h1>
+                    <span className="text-sm text-slate-700">
+                        Complete All Fields {completionText}
+                    </span>
+
+                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+                <div>
+                    <div className="flex items-center gap-x-2"> 
+                    <IconBadge icon={LayoutDashboard}/>
+                    <h1>
+                        Customize your Course
+                    </h1>  
+                    </div>
+                    <TitleForm
+                    initialData = {course}
+                    courseId = {params.courseId}
+                    />
+                </div>
+
+            </div>
+        
+        </div>
     )
 }
