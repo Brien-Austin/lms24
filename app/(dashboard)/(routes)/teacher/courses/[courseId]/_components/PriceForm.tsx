@@ -16,27 +16,27 @@ import toast from 'react-hot-toast'
 import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 import path from 'path'
+import { formatPrice } from '@/lib/formatCurrency'
+import { cn } from '@/lib/utils'
 const formSchema = z.object({
-    title:z.string().min(1,{
-        message:"Title is required"
-    })
+    price:z.coerce.number()
 })
 
-interface tilteProps {
+interface priceForm {
     initialData : {
-        title : string
+        price : number | null
     },
     courseId : string
 }
 
-const TitleForm = ({initialData,courseId} : tilteProps) => {
+const PriceForm = ({initialData,courseId} : priceForm) => {
 
     const [isEditing , setEditing] = useState<boolean>(false)
  
     const form = useForm<z.infer<typeof formSchema>>({
         resolver:zodResolver(formSchema),
         defaultValues:{
-            title:""
+            price:initialData?.price || undefined
         }
     })
     
@@ -47,12 +47,12 @@ const router = useRouter();
     const onSubmit =  async(values:z.infer<typeof formSchema>) =>{
         try {
             await axios.patch(`/api/courses/${courseId}`,values);
-            toast.success('Title updated successfully')
+            toast.success('Course updated successfully')
             toggleEdit();
             router.refresh();
             
           
-        } catch  {
+        } catch (error) {
             console.log('Error from Component')
             toast.error('Something went wrong')
             
@@ -65,7 +65,7 @@ const toggleEdit =()=> setEditing((current)=>!current)
     return ( 
        <div className='mt-6 border bg-slate-100 rounded-md p-4'>
         <div className='font-medium flex items-center justify-between '>
-            Course title
+            Course price
             <Button onClick={toggleEdit} variant="ghost">
                {
                 isEditing ? (
@@ -75,7 +75,7 @@ const toggleEdit =()=> setEditing((current)=>!current)
                 ) : (
                     <>
                     <Pencil className='h-4 w-4 mr-2'/>
-                    Edit Title
+                    Edit Price
                     </>
                    )
                }
@@ -87,16 +87,17 @@ const toggleEdit =()=> setEditing((current)=>!current)
         </div>
         {!isEditing ? (
             <>
-            <p>{initialData.title}</p>
+            <p  className={cn("text-sm mt-2",!initialData.price && "text-slate-500 italic")}>{formatPrice(initialData.price) || 'No Description added'}</p>
+
             </>
         ) : (<>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 mt-4'>
-                <FormField control={form.control} name="title" render={({field})=>
+                <FormField control={form.control} name="price" render={({field})=>
             <FormItem>
                 <FormControl>
                     <Input disabled={isSubmitting}
-                    placeholder={`e.g ${initialData.title}'`}
+                    placeholder={`Set a price for your course`}
                     {...field}/>
                 </FormControl>
             </FormItem>}/>
@@ -117,4 +118,4 @@ const toggleEdit =()=> setEditing((current)=>!current)
      );
 }
  
-export default TitleForm;
+export default PriceForm;

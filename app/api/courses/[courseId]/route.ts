@@ -14,7 +14,7 @@ export async function PATCH(
 
     const { courseId } = params;
     const values = await req.json();
-    const title = values.title;
+   
 
     const course = await db.course.update({
       where: {
