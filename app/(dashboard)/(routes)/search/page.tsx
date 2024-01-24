@@ -1,8 +1,17 @@
-const Search = () => {
-    console.log("Inside the search")
+import { db } from "@/lib/db";
+import Categories from "./_components/Categories";
+
+const Search = async() => {
+    const categories = await db.category.findMany({
+        orderBy : {
+            "name" : "asc"
+        }
+    })
+  
     return ( 
-        <div>
-            This is Search Route
+        <div className="p-6">
+            <Categories items={categories}/>
+          
         </div>
      );
 }
