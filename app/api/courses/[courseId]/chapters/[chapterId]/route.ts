@@ -16,9 +16,12 @@ const { Video } = new Mux(
 
 
 
-export async function PATCH( req:Request, {params} : {params: {courseId : string ,chapterId : string}}){
-   try {
-    const {userId} = auth();
+export async function PATCH(
+  req: Request,
+  { params }: { params: { courseId: string; chapterId: string } }
+) {
+  try {
+    const { userId } = auth();
     const { isPublished, ...values } = await req.json();
 
     if (!userId) {
@@ -77,16 +80,11 @@ export async function PATCH( req:Request, {params} : {params: {courseId : string
       });
     }
 
-      
-      return NextResponse.json(chapter);
-      
-    
-   } catch (error) {
-
-    console.log('[COURSE_CHAPTERID_ERROR',error);
-    return new NextResponse("CHAPTER_EDIT ERROR", {status : 500})
-    
-   }
+    return NextResponse.json(chapter);
+  } catch (error) {
+    console.log("[COURSES_CHAPTER_ID]", error);
+    return new NextResponse("Internal Error", { status: 500 }); 
+  }
 }
 
 export async function DELETE( req:Request,  {params} : {params: {courseId : string ,chapterId : string}}){
