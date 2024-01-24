@@ -10,8 +10,14 @@ import { ImageForm } from "./_components/ImageForm";
 import CategoryForm from "./_components/CategoryForm";
 import PriceForm from "./_components/PriceForm";
 import { AttachmentForm } from "./_components/AttachmentForm";
+import { ChaptersForm } from "./_components/ChaptersForm";
+
+
+
 
 export default async function Course({params} : {params: {courseId : string}}){
+    const {userId} = auth();
+  
 
     
     const categories = await db.category.findMany({
@@ -23,7 +29,22 @@ export default async function Course({params} : {params: {courseId : string}}){
 console.log(categories)
     const course = await db.course.findUnique({
         where : {
-            id : params.courseId
+            id : params.courseId,
+          
+       
+        },
+        include:{
+            chapters : {
+                orderBy : {
+                    position : "asc"
+                }
+
+            },
+            attachments: {
+                orderBy: {
+                  createdAt: "desc",
+                },
+              },
         }
     })
 
@@ -39,7 +60,8 @@ console.log(categories)
         course?.description,
         course?.imageUrl,
         course?.price,
-        course?.categoryID
+        course?.categoryID,
+        course?.chapters.some(chapters => chapters.isPublished)
     ]
 
     const totalFields = requiredFields.length;
@@ -99,9 +121,9 @@ console.log(categories)
                             <h2 className="text-xl">Course Chapters</h2>
 
                         </div>
-                        <div>
-                            Todo chapters
-                        </div>
+                       <div>
+                        <ChaptersForm  initialData={course} courseId={course.id}/>
+                       </div>
                     </div>
                     <div>
                     <div className="flex items-center gap-x-2">
@@ -113,9 +135,23 @@ console.log(categories)
                     </div>
                     <PriceForm initialData={course} courseId={params.courseId}/>
                 </div>
+                <div>
+                <div className="flex items-center gap-x-2">
+                        <IconBadge icon={File}/>
+                        <h2 className="text-xl">
+                            Resources and Attachments
+                        </h2>
+
+                    </div>
+                    <AttachmentForm
+                    initialData = {course}
+                    courseId = {course.id}
+                    />
+                </div>
+
                
                 </div>
-                <div></div>
+             
 
             </div>
         
