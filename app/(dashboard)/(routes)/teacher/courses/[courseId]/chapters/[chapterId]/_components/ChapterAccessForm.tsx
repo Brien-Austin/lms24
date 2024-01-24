@@ -51,7 +51,10 @@ const router = useRouter();
     const onSubmit =  async(values:z.infer<typeof formSchema>) =>{
         try {
             
-            await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+            const response =  await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+            const data = await response.data;
+            console.log(data)
+            
             toast.success('Chapter updated successfully')
             toggleEdit();
             router.refresh();

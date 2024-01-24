@@ -11,6 +11,8 @@ import CategoryForm from "./_components/CategoryForm";
 import PriceForm from "./_components/PriceForm";
 import { AttachmentForm } from "./_components/AttachmentForm";
 import { ChaptersForm } from "./_components/ChaptersForm";
+import { Banner } from "@/components/banner";
+import { Actions } from "./_components/Actions";
 
 
 
@@ -67,9 +69,17 @@ console.log(categories)
     const totalFields = requiredFields.length;
     const completedFields = requiredFields.filter(Boolean).length;
     const completionText = `(${completedFields}/${totalFields})`
+    const isComplete = requiredFields.every(Boolean)
     const id = auth();
     console.log(id);
-    return (
+    return (<>
+    {
+        !course.isPublished && (
+            <>
+            <Banner label="This course is not published and it will not be visible to the students"/>
+            </>
+        )
+    }
         <div className="p-6">
             <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-y-2">
@@ -81,6 +91,7 @@ console.log(categories)
                     </span>
 
                 </div>
+               <Actions disabled={!isComplete} courseId={params.courseId} isPublished={course.isPublished}/>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
                 <div>
@@ -156,5 +167,6 @@ console.log(categories)
             </div>
         
         </div>
+        </>
     )
 }
