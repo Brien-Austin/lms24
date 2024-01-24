@@ -50,16 +50,17 @@ export const Actions = ({
     try {
       setIsLoading(true);
 
-      await axios.delete(`/api/courses/${courseId}/publish`);
+      await axios.delete(`/api/courses/${courseId}`);
 
-      toast.success("Chapter deleted");
-      router.refresh();
+      toast.success("Course deleted");
+     
       router.push(`/teacher/courses/`);
     } catch {
       toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
+    router.refresh();
   }
 
   return (
