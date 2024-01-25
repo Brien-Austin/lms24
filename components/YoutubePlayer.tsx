@@ -1,44 +1,32 @@
 "use client"
-
+import { Lock } from 'lucide-react';
 import React from 'react';
-import YouTube from 'react-youtube';
+import ReactPlayer from 'react-player';
 
-interface YouTubePlayerProps {
-  videoUrl: string | null | undefined;
-  isLocked : boolean;
+interface YoutubePlayerProps {
+  url: string;
+  isLocked : boolean | undefined
 }
 
-const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoUrl,isLocked }) => {
-  if (!videoUrl) {
-    return <div>Error: Invalid YouTube video URL</div>;
-  }
-
-  // Extract video ID from the URL
-  const getVideoId = (url: string): string | null => {
-    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=))([^"&?\/\s]{11})/);
-    return match && match[1] ? match[1] : null;
-  };
-
-  const videoId = getVideoId(videoUrl);
-
-  if (!videoId) {
-    return <div>Error: Invalid YouTube video URL</div>;
-  }
-
-  const opts: any = {
-    height: '390',
-    width: '640',
-    playerVars: {
-      autoplay: 1,
-    },
-    // Add any additional options here
-  };
-
+const YoutubePlayer: React.FC<YoutubePlayerProps> = ({ url,isLocked }) => {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <YouTube videoId={videoId} opts={opts} />
+   <>
+   {isLocked ? ( <>
+    <div className='w-full sm:w-4/5 h-96 lg:w-3/5 mx-auto bg-slate-800 flex items-center justify-center'>
+        <div className='flex flex-col  gap-3 items-center text-white text-sm'>
+            <Lock/>
+            Buy this course to access the course !
+
+        </div>
+     
     </div>
+   
+   </>) : ( <>
+    <div className='w-full sm:w-4/5 h-96 lg:w-3/5 mx-auto'>
+      <ReactPlayer url={url} controls={true} light={true} width='100%' height='100%' playing={false}/>
+    </div> </>)}
+   </>
   );
 };
 
-export default YouTubePlayer;
+export default YoutubePlayer;
