@@ -6,6 +6,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch","fullTextIndex"]
 }
 
 model Course {
@@ -25,6 +26,7 @@ model Course {
   updatedAt DateTime @updatedAt
 
   @@index([categoryID])
+  @@fulltext([title])
 }
 
 model Category{
@@ -54,6 +56,7 @@ model Chapter {
   title String
   description String?
   videoUrl String?
+  youtubeUrl String?
   position Int
   isPublished Boolean @default(false)
   isFree Boolean @default(false)
@@ -104,6 +107,7 @@ model Purchase {
   updatedAt DateTime @updatedAt
 
   @@index([courseID])
+  @@unique([userID,courseID])
 }
 
 model StripeCustomer {

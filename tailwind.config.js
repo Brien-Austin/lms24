@@ -18,6 +18,9 @@ module.exports = withUt({
       },
     },
     extend: {
+      screens:{
+        sm : '320px'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
