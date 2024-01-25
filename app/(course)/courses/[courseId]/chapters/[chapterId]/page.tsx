@@ -18,7 +18,7 @@ const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : 
     userId,chapterId:params.chapterId,courseId:params.courseId
   })
 
-  const isLocked =  false /*!chapter?.isFree && !purchase*/
+  const isLocked =!chapter?.isFree && !purchase
   const completeOnEnd = !!purchase && !userProgress?.isCompleted
   return (
     <div>
