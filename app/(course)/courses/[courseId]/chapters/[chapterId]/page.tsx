@@ -8,6 +8,9 @@ import { auth } from '@clerk/nextjs'
 
 import { redirect } from 'next/navigation';
 import React from 'react'
+import { CourseProgressButton } from './_components/CourseProgressButton';
+
+
 
 
 const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : string}}) => {
@@ -53,7 +56,7 @@ const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : 
       {chapter?.title}
       </h1>
       {purchase ? ( <>
-      {/*Add course progress button*/}
+      <CourseProgressButton chapterId = {params.chapterId} courseId = {params.courseId} nextChapterId={nextChapter?.id} isCompleted={!!userProgress?.isCompleted}/>
       </>) : ( <>
       <CourseEnrollButton courseId = {params.courseId} price={course?.price!}/>
       </>)}

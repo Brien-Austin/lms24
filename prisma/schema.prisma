@@ -50,6 +50,19 @@ model Attachment {
 
 }
 
+model Notes {
+  id String @id @default(uuid())
+  name String
+  url String @db.Text
+}
+
+model CourseRequest{
+  id String @id @default(uuid())
+  userId String
+  courseId String
+
+}
+
 
 model Chapter {
   id String @id @default(uuid())
@@ -96,6 +109,7 @@ model UserProgress {
   @@unique([userID,chapterID])
   
 }
+
 
 model Purchase {
   id String @id @default(uuid())
