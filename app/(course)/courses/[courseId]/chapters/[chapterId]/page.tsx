@@ -65,25 +65,30 @@ const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : 
           </>
         )}
       </h1>
-     
-  
-      
-    </div>
-    <Separator/>
+ 
     {!!attachments.length && (
       <>
       <Separator/>
       <div>
+      <h1 className="text-xl font-medium">
+            Attachments
+          </h1>
         {
+          
           attachments.map((notes)=>(
+
             <a href={notes.url} key={notes.id}>
-              <p>{notes.name}</p>
+              <p className='text-xs p-3 truncate bg-blue-200 rounded mt-3 '>{notes.name}</p>
               </a>
           ))
         }
       </div>
       </>
     )}
+  
+      
+    </div>
+    
          
           {/* <YouTubePlayer videoUrl={chapter?.youtubeUrl}/> */}
 

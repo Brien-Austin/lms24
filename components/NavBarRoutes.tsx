@@ -11,6 +11,11 @@ import SearchInput from "./SearchInput";
 export  const NavBarRoutes = () =>{
     const pathname = usePathname();
     const router = useRouter();
+    const onClick = () =>{
+        setTimeout(() => {
+            router.push('/teacher/courses');
+        }, 5000)
+    }
 
     const isTeacherPage = pathname?.startsWith('/teacher')
     const isUsersPage = pathname?.includes("/courses")
@@ -24,18 +29,20 @@ export  const NavBarRoutes = () =>{
         )}
         <div className="flex gap-x-2 ml-auto ">
             { isTeacherPage || isUsersPage ? (
-                 <Link href={"/"}>
+                 <Link href={"/admin"}>
                 <Button size="sm" variant="ghost">
                     <LogOut className="h-4 w-4 mr-2"/>
                     Exit
                 </Button>
                 </Link>
             ) : (
-                <Link href={"/teacher/courses"}>
-                    <Button variant={'ghost'}>
-                        Teacher Mode
-                    </Button>
-                </Link>
+                <>
+                </>
+                // <Link href={"/teacher/courses"}>
+                //     <Button variant={'ghost'}>
+                //         Teacher Mode
+                //     </Button>
+                // </Link>
             )}
             <UserButton afterSignOutUrl="/"/>
 

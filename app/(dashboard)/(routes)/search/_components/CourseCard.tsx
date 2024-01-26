@@ -1,4 +1,5 @@
 
+import CourseProgress from '@/app/(course)/courses/[courseId]/_components/CourseProgress'
 import { IconBadge } from '@/components/IconBadge'
 import { formatPrice } from '@/lib/formatCurrency'
 import { BookOpen } from 'lucide-react'
@@ -37,7 +38,7 @@ const CourseCard = ({id , title , imageUrl , chaptersLength,category , price,pro
     </span>
   </div>
 </div>
-{/*Progress*/ }
+{<CourseProgress variant={progress === 100 ? "success" : "default" } size='sm' value={progress}/>}
 <p className='font-medium'>{formatPrice(price)}</p>
   </div>
   
