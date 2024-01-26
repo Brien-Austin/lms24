@@ -1,7 +1,7 @@
 import { IconBadge } from '@/components/IconBadge';
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs'
-import { ArrowLeft, Eye, LayoutDashboard, Video } from 'lucide-react';
+import { ArrowLeft, Eye, LayoutDashboard, Video, YoutubeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
@@ -12,6 +12,7 @@ import ChapterAccesForm from './_components/ChapterAccessForm';
 import {  ChapterVideoForm } from './_components/ChapterImageForm';
 import { Banner } from '@/components/banner';
 import { ChapterActions } from './_components/ChapterActions';
+import ChapterYoutubeUrl from './_components/ChapterYoutubeUrl';
 
 const Chapter = async({params} : {params : {courseId : string, chapterId : string}}) => {
     const {userId} = auth();
@@ -36,7 +37,7 @@ const Chapter = async({params} : {params : {courseId : string, chapterId : strin
     const requiredFields = [
         chapter.title,
         chapter.description,
-        chapter.videoUrl
+        chapter.youtubeUrl
     ]
 
     const totalFields = requiredFields.length;
@@ -98,13 +99,13 @@ const Chapter = async({params} : {params : {courseId : string, chapterId : strin
                 <div className='space-y-4'>
                     <div>
                         <div className='flex items-center gap-x-2'>
-                            <IconBadge icon = {Video}/>
+                            <IconBadge icon = {YoutubeIcon}/>
                             <h2 className='text-xl'>
-                                Add a video 
+                                Add a Youtube Url
                             </h2>
                         </div>
                         <div>
-                           <ChapterVideoForm initialData={chapter} chapterId={params.chapterId}courseId={params.courseId}/>
+                           <ChapterYoutubeUrl initialData={chapter} chapterId={params.chapterId}courseId={params.courseId}/>
                         </div>
                         
                     </div>

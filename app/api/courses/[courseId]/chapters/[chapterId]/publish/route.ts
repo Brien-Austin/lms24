@@ -32,13 +32,8 @@ export async function PATCH(
       }
     });
 
-    const muxData = await db.muxData.findUnique({
-      where: {
-        chapterID: params.chapterId,
-      }
-    });
 
-    if (!chapter || !muxData || !chapter.title || !chapter.description || !chapter.videoUrl) {
+    if (!chapter || !chapter.title || !chapter.description || !chapter.youtubeUrl) {
       return new NextResponse("Missing required fields", { status: 400 });
     }
 

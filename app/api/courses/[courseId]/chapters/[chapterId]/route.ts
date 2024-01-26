@@ -105,7 +105,7 @@ export async function PATCH(
     const ownCourse = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId
+        userId  
       }
     });
 
@@ -123,36 +123,7 @@ export async function PATCH(
       }
     });
 
-    if (values.videoUrl) {
-      const existingMuxData = await db.muxData.findFirst({
-        where: {
-          chapterID: params.chapterId,
-        }
-      });
-
-      if (existingMuxData) {
-        await Video.Assets.del(existingMuxData.assetID);
-        await db.muxData.delete({
-          where: {
-            id: existingMuxData.id,
-          }
-        });
-      }
-
-      const asset = await Video.Assets.create({
-        input: values.videoUrl,
-        playback_policy: "public",
-        test: false,
-      });
-
-      await db.muxData.create({
-        data: {
-          chapterID: params.chapterId,
-          assetID: asset.id,
-          playbackID: asset.playback_ids?.[0]?.id,
-        }
-      });
-    }
+   
 
     return NextResponse.json(chapter);
   } catch (error) {

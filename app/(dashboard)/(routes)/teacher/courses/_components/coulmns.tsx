@@ -68,7 +68,7 @@ export const columns: ColumnDef<Course>[] = [
     cell :({row})=>{
       const isPublished = row.getValue("isPublished") || false;
       return (
-        <Badge className={cn("bg-slate-500",isPublished && "bg-green-600")}>
+        <Badge className={cn("bg-slate-500",isPublished && "bg-emerald-700 hover:bg-emerald-600")}>
           {isPublished ? "Published" : "Draft"}
         </Badge>
       )
