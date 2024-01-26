@@ -1,7 +1,11 @@
 import { getChapter } from '@/app/actions/get-chapter';
+import CourseEnrollButton from '@/components/CourseEnrollButton';
 import YoutubePlayer from '@/components/YoutubePlayer';
 import { Banner } from '@/components/banner';
+import { Preview } from '@/components/ui/preview';
+import { Separator } from '@/components/ui/separator';
 import { auth } from '@clerk/nextjs'
+
 import { redirect } from 'next/navigation';
 import React from 'react'
 
@@ -32,9 +36,54 @@ const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : 
       <div className=' w-full'>
          {
           chapter?.youtubeUrl !== null && (chapter?.youtubeUrl !==undefined) && (
-            <YoutubePlayer isLocked={isLocked}url={chapter?.youtubeUrl}/>
+            <YoutubePlayer
+            chapterId={chapter.id}
+          
+            courseId = {params.courseId}
+            title={chapter.title}
+            description={chapter?.description}
+            nextChapterId={nextChapter?.id}
+            completeOnEnd = {completeOnEnd}
+             isLocked={isLocked}
+             url={chapter?.youtubeUrl}/>
           )
          }
+          <div className='p-8 flex flex-col  gap-8'>
+      <h1 className="font-medium text-xl">
+      {chapter?.title}
+      </h1>
+      {purchase ? ( <>
+      {/*Add course progress button*/}
+      </>) : ( <>
+      <CourseEnrollButton courseId = {params.courseId} price={course?.price!}/>
+      </>)}
+      <Separator/>
+      <h1 className="text-muted-foreground">
+        {chapter?.description !==null && chapter?.description !== undefined && (
+          <>
+          {<Preview value={chapter.description}/>}
+          </>
+        )}
+      </h1>
+     
+  
+      
+    </div>
+    <Separator/>
+    {!!attachments.length && (
+      <>
+      <Separator/>
+      <div>
+        {
+          attachments.map((notes)=>(
+            <a href={notes.url} key={notes.id}>
+              <p>{notes.name}</p>
+              </a>
+          ))
+        }
+      </div>
+      </>
+    )}
          
           {/* <YouTubePlayer videoUrl={chapter?.youtubeUrl}/> */}
 
