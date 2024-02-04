@@ -18,7 +18,7 @@ export const CoursesList = ({
 }: CoursesListProps) => {
   return (
     <div>
-      <div className="grid sm:grid-cols-1 lg:gap-10 sm:gap-5 lg:grid-cols-4 ">
+      <div className="grid sm:carousel-container lg:gap-10 sm:gap-5 lg:grid-cols-4 ">
         {items.map((item) => (
           <CourseCard
             key={item.id}
