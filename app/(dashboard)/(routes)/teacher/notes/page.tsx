@@ -113,11 +113,22 @@ const NotesPage = () => {
             
           </div>
         <div  className='mb-8'>
-        <FileUpload   endpoint='courseAttachment' onChange={(url:any) => {
+        {
+          !url ? ( <>
+          <FileUpload   endpoint='courseAttachment' onChange={(url:any) => {
               if (url) {
                 onImageSubmit({ url: url });
               }
             }}/>
+            </>) : ( 
+            <div className=' rounded-md p-3 bg-emerald-200 border border-emerald-800'>
+            Uploaded the Document
+            <h1 className=" text-slate-500 text-muted-foreground">
+              Publish the notes !
+            </h1>
+          </div>
+          )
+        }
         </div>
         <Button type='submit' className='w-full mb-3 '>
             Publish Notes 🚀
