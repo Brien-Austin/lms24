@@ -59,8 +59,16 @@ model Notes {
 model CourseRequest{
   id String @id @default(uuid())
   userId String
+  userName String
   courseId String
+  givenAccess Boolean @default(false)
 
+}
+
+model commonNotes {
+  id String @id @default(uuid())
+  name String
+  url String
 }
 
 
@@ -117,6 +125,7 @@ model Purchase {
 
   courseID String
   course Course @relation( fields: [courseID],references: [id],onDelete: Cascade)
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

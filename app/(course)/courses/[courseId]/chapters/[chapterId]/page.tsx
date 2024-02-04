@@ -4,17 +4,21 @@ import YoutubePlayer from '@/components/YoutubePlayer';
 import { Banner } from '@/components/banner';
 import { Preview } from '@/components/ui/preview';
 import { Separator } from '@/components/ui/separator';
-import { auth } from '@clerk/nextjs'
+import { auth, useUser } from '@clerk/nextjs'
 
 import { redirect } from 'next/navigation';
 import React from 'react'
 import { CourseProgressButton } from './_components/CourseProgressButton';
+import { Button } from '@/components/ui/button';
+import AccessForm from './_components/AccessForm';
 
 
 
 
 const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : string}}) => {
   const {userId} = auth();
+ 
+
   if(!userId) {
     return redirect('/')
   }
@@ -58,7 +62,7 @@ const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : 
       {purchase ? ( <>
       <CourseProgressButton chapterId = {params.chapterId} courseId = {params.courseId} nextChapterId={nextChapter?.id} isCompleted={!!userProgress?.isCompleted}/>
       </>) : ( <>
-      <CourseEnrollButton courseId = {params.courseId} price={course?.price!}/>
+      <AccessForm userId={userId} courseId = {params.courseId}/>
       </>)}
       <Separator/>
       <h1 className="text-muted-foreground">
