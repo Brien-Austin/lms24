@@ -70,6 +70,7 @@ export async function POST( req : Request , {params} : {params : {courseId : str
 
         const session = await stripe.checkout.sessions.create({
             customer : stripeCustomer.stripeCustomerID,
+            payment_method_types : ["card"],
             line_items,
             mode : 'payment',
             

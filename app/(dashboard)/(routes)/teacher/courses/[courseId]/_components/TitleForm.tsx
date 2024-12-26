@@ -52,8 +52,9 @@ const router = useRouter();
             router.refresh();
             
           
-        } catch  {
-            console.log('Error from Component')
+        } catch(error)  {
+       
+            console.log('Error from Component',error)
             toast.error('Something went wrong')
             
         }

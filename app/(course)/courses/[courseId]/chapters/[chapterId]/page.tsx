@@ -4,21 +4,14 @@ import YoutubePlayer from '@/components/YoutubePlayer';
 import { Banner } from '@/components/banner';
 import { Preview } from '@/components/ui/preview';
 import { Separator } from '@/components/ui/separator';
-import { auth, useUser } from '@clerk/nextjs'
+import { auth } from '@clerk/nextjs'
 
 import { redirect } from 'next/navigation';
 import React from 'react'
-import { CourseProgressButton } from './_components/CourseProgressButton';
-import { Button } from '@/components/ui/button';
-import AccessForm from './_components/AccessForm';
-
-
 
 
 const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : string}}) => {
   const {userId} = auth();
- 
-
   if(!userId) {
     return redirect('/')
   }
@@ -60,9 +53,9 @@ const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : 
       {chapter?.title}
       </h1>
       {purchase ? ( <>
-      <CourseProgressButton chapterId = {params.chapterId} courseId = {params.courseId} nextChapterId={nextChapter?.id} isCompleted={!!userProgress?.isCompleted}/>
+      {/*Add course progress button*/}
       </>) : ( <>
-      <AccessForm userId={userId} courseId = {params.courseId}/>
+      <CourseEnrollButton courseId = {params.courseId} price={course?.price!}/>
       </>)}
       <Separator/>
       <h1 className="text-muted-foreground">
@@ -72,30 +65,25 @@ const ChapterIdPage = async({params} : {params : {courseId : string,chapterId : 
           </>
         )}
       </h1>
- 
+     
+  
+      
+    </div>
+    <Separator/>
     {!!attachments.length && (
       <>
       <Separator/>
       <div>
-      <h1 className="text-xl font-medium">
-            Attachments
-          </h1>
         {
-          
           attachments.map((notes)=>(
-
             <a href={notes.url} key={notes.id}>
-              <p className='text-xs p-3 truncate bg-blue-200 rounded mt-3 '>{notes.name}</p>
+              <p>{notes.name}</p>
               </a>
           ))
         }
       </div>
       </>
     )}
-  
-      
-    </div>
-    
          
           {/* <YouTubePlayer videoUrl={chapter?.youtubeUrl}/> */}
 

@@ -20,6 +20,7 @@ const CourseEnrollButton = ({price,courseId} : props) => {
       window.location.assign(response.data.url)
       
     } catch (error) {
+      console.log("Stripe Error",error)
       toast.error('Something went wrong ')
       
     }
