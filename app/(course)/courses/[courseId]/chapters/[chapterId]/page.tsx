@@ -101,6 +101,7 @@ const ChapterIdPage = async({ params }: { params: { courseId: string; chapterId:
                     <p className="text-xs p-3 truncate bg-blue-200 rounded mt-3">
                       {notes.name}
                     </p>
+                    
                   </a>
                 ))}
               </div>
