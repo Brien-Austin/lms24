@@ -144,7 +144,7 @@ console.log(categories)
                         </h2>
 
                     </div>
-                    <PriceForm initialData={course} courseId={params.courseId}/>
+                    <PriceForm initialData={{ ...course, price: course.price ? Number(course.price) : null }} courseId={params.courseId}/>
                 </div>
                 <div>
                 <div className="flex items-center gap-x-2">

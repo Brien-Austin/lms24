@@ -70,7 +70,7 @@ const selectedOption = options.find(option => option.value === initialData.categ
     return ( 
        <div className='mt-6 border bg-slate-100 rounded-md p-4'>
         <div className='font-medium flex items-center justify-between '>
-            Course description
+            Course Category
             <Button onClick={toggleEdit} variant="ghost">
                {
                 isEditing ? (
@@ -80,7 +80,7 @@ const selectedOption = options.find(option => option.value === initialData.categ
                 ) : (
                     <>
                     <Pencil className='h-4  w-4 mr-2'/>
-                    Edit description
+                    Edit Category
                     </>
                    )
                }

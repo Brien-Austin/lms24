@@ -16,7 +16,7 @@ const Greeting = () => {
     } else {
       setGreeting('Good evening');
     }
-  }, []); // Empty dependency array ensures the effect runs once on mount
+  }, []); 
 
   return (
     <div className='flex items-center justify-between px-5'>
